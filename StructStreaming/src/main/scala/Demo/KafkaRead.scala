@@ -18,6 +18,7 @@ object KafkaRead {
             .appName("KafkaRead")
             .master("local[*]")
             .getOrCreate()
+
         import spark.implicits._
         val df: DataFrame = spark.readStream
             .format("kafka")
@@ -42,38 +43,25 @@ object KafkaRead {
                 val t = s.split(" ")
                 (t(0), t(1).toDouble)
             }).toDF("name", "score")
-        val query: StreamingQuery = frame.writeStream.format("console").outputMode("append").start()
+//        val query: StreamingQuery = frame.writeStream.format("console").outputMode("append").start()
 
 
-        val query1 = frame
+        val query: StreamingQuery = frame
             .writeStream
             .queryName("demo")
             .foreachBatch { (batchDF: DataFrame, _: Long) => {
                 batchDF.persist()
 
-                println(LocalDateTime.now() + "start writing cow table")
-                batchDF.write.format("org.apache.hudi")
-                    .option(TABLE_TYPE_OPT_KEY, "COPY_ON_WRITE")
-                    .option(PRECOMBINE_FIELD_OPT_KEY, "kafka_timestamp")
-                    // 以kafka分区和偏移量作为组合主键
-                    .option(RECORDKEY_FIELD_OPT_KEY, "kafka_partition_offset")
-                    // 以当前日期作为分区
-                    .option(PARTITIONPATH_FIELD_OPT_KEY, "partition_date")
-                    .option(TABLE_NAME, "copy_on_write_table")
-                    .option(HIVE_STYLE_PARTITIONING_OPT_KEY, true)
-                    .mode(SaveMode.Append)
-                    .save("/tmp/sparkHudi/COPY_ON_WRITE")
 
                 println(LocalDateTime.now() + "start writing mor table")
                 batchDF.write.format("org.apache.hudi")
-                    .option(TABLE_TYPE_OPT_KEY, "MERGE_ON_READ")
-                    .option(TABLE_TYPE_OPT_KEY, "COPY_ON_WRITE")
-                    .option(PRECOMBINE_FIELD_OPT_KEY, "kafka_timestamp")
-                    .option(RECORDKEY_FIELD_OPT_KEY, "kafka_partition_offset")
-                    .option(PARTITIONPATH_FIELD_OPT_KEY, "partition_date")
-                    .option(TABLE_NAME, "merge_on_read_table")
+                    .option("TABLE_TYPE_OPT_KEY", "MERGE_ON_READ")
+                    .option("TABLE_TYPE_OPT_KEY", "COPY_ON_WRITE")
+                    .option("PRECOMBINE_FIELD_OPT_KEY", "name")
+                    .option("RECORDKEY_FIELD_OPT_KEY", "name")
+                    .option("TABLE_NAME", "demo")
                     .mode(SaveMode.Append)
-                    .save("/tmp/sparkHudi/MERGE_ON_READ")
+                    .save("hdfs://ddc002.lqad:8020/tmp/xzhang/MERGE_ON_READ")
 
                 println(LocalDateTime.now() + "finish")
                 batchDF.unpersist()
