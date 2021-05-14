@@ -17,6 +17,7 @@ object KafkaRead {
             .builder
             .appName("KafkaRead")
             .master("local[*]")
+            .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
             .getOrCreate()
 
         import spark.implicits._
@@ -42,8 +43,12 @@ object KafkaRead {
             .map(s => {
                 val t = s.split(" ")
                 (t(0), t(1).toDouble)
-            }).toDF("name", "score")
-//        val query: StreamingQuery = frame.writeStream.format("console").outputMode("append").start()
+            })
+            .map(x => {
+                (x._1, x._2, LocalDateTime.now().toString,1)
+            }).toDF("name", "score", "ts","uuid")
+
+        //        val query: StreamingQuery = frame.writeStream.format("console").outputMode("append").start()
 
 
         val query: StreamingQuery = frame
@@ -51,17 +56,18 @@ object KafkaRead {
             .queryName("demo")
             .foreachBatch { (batchDF: DataFrame, _: Long) => {
                 batchDF.persist()
+                println(batchDF)
 
 
                 println(LocalDateTime.now() + "start writing mor table")
                 batchDF.write.format("org.apache.hudi")
                     .option("TABLE_TYPE_OPT_KEY", "MERGE_ON_READ")
-                    .option("TABLE_TYPE_OPT_KEY", "COPY_ON_WRITE")
-                    .option("PRECOMBINE_FIELD_OPT_KEY", "name")
-                    .option("RECORDKEY_FIELD_OPT_KEY", "name")
-                    .option("TABLE_NAME", "demo")
+                    .option("hoodie.table.name", "Demo")
+                    .option("PRECOMBINE_FIELD_OPT_KEY", LocalDateTime.now().toString) //ts
+                    .option("PARTITIONPATH_FIELD_OPT_KEY","part1")
+                    .option("RECORDKEY_FIELD_OPT_KEY",1) //uuid
                     .mode(SaveMode.Append)
-                    .save("hdfs://ddc002.lqad:8020/tmp/xzhang/MERGE_ON_READ")
+                    .save("/tmp/xzhang/MERGE_ON_READ")
 
                 println(LocalDateTime.now() + "finish")
                 batchDF.unpersist()
@@ -69,9 +75,6 @@ object KafkaRead {
             }
             .option("checkpointLocation", "/tmp/sparkHudi/checkpoint/")
             .start()
-
-
-
 
 
         query.awaitTermination()
