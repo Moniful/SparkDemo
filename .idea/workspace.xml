@@ -2,13 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a7d891a-6b4c-4b55-90e1-f28777366519" name="Default Changelist" comment="提交代码">
+      <change afterPath="$PROJECT_DIR$/StructStreaming/src/core-site.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/StructStreaming/src/main/scala/Demo/ReadParquet.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/StructStreaming/src/main/scala/Demo/SparkHudi.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/StructStreaming/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/StructStreaming/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StructStreaming/src/main/scala/Demo/KafkaRead.scala" beforeDir="false" afterPath="$PROJECT_DIR$/StructStreaming/src/main/scala/Demo/KafkaRead.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StructStreaming/target/classes/Demo/KafkaRead$$anonfun$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/StructStreaming/target/classes/Demo/KafkaRead$$anonfun$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StructStreaming/target/classes/Demo/KafkaRead$$anonfun$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/StructStreaming/target/classes/Demo/KafkaRead$$anonfun$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StructStreaming/target/classes/Demo/KafkaRead$$anonfun$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/StructStreaming/target/classes/Demo/KafkaRead$$anonfun$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StructStreaming/target/classes/Demo/KafkaRead$$typecreator7$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/StructStreaming/target/classes/Demo/KafkaRead$$typecreator7$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StructStreaming/target/classes/Demo/KafkaRead$$typecreator8$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/StructStreaming/target/classes/Demo/KafkaRead$$typecreator8$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StructStreaming/target/classes/Demo/KafkaRead$.class" beforeDir="false" afterPath="$PROJECT_DIR$/StructStreaming/target/classes/Demo/KafkaRead$.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,8 +24,31 @@
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\dev_env\LocalRepository" />
+        <option name="mavenHome" value="D:/dev_env/apache-maven-3.6.3" />
+        <option name="userSettingsFile" value="D:\dev_env\apache-maven-3.6.3\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
@@ -30,13 +58,15 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/StructStreaming/src" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\SparkSql\StructStreaming\src" />
       <recent name="E:\SparkSql\StructStreaming\src\main\resources" />
     </key>
   </component>
@@ -52,20 +82,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.KafkaRead">
-    <configuration name="Implicit" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="Scala.Implicit" />
-      <module name="SparkSql" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Scala.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.ReadParquet">
     <configuration name="KafkaRead" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="Demo.KafkaRead" />
       <module name="StructStreaming" />
@@ -92,6 +109,32 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ReadParquet" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="Demo.ReadParquet" />
+      <module name="StructStreaming" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SparkHudi" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="Demo.SparkHudi" />
+      <module name="StructStreaming" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="StructStreamingDemo" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="Demo.StructStreamingDemo" />
       <module name="StructStreaming" />
@@ -105,33 +148,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="check" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="Test.check" />
-      <module name="SparkSql" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
-      <item itemvalue="Application.Implicit" />
-      <item itemvalue="Application.check" />
       <item itemvalue="Application.StructStreamingDemo" />
       <item itemvalue="Application.KafkaWrite" />
       <item itemvalue="Application.KafkaRead" />
+      <item itemvalue="Application.SparkHudi" />
+      <item itemvalue="Application.ReadParquet" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ReadParquet" />
         <item itemvalue="Application.KafkaRead" />
+        <item itemvalue="Application.SparkHudi" />
         <item itemvalue="Application.KafkaWrite" />
         <item itemvalue="Application.StructStreamingDemo" />
-        <item itemvalue="Application.check" />
-        <item itemvalue="Application.Implicit" />
       </list>
     </recent_temporary>
   </component>
@@ -149,7 +179,8 @@
       <workItem from="1620289539246" duration="13002000" />
       <workItem from="1620463847064" duration="27619000" />
       <workItem from="1620898523800" duration="13418000" />
-      <workItem from="1620970008434" duration="240000" />
+      <workItem from="1620970008434" duration="3838000" />
+      <workItem from="1620975539820" duration="8425000" />
     </task>
     <task id="LOCAL-00001" summary="提交代码">
       <created>1620900117807</created>
@@ -182,9 +213,25 @@
     <option name="LAST_COMMIT_MESSAGE" value="提交代码" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/StructStreaming/src/main/scala/Demo/KafkaRead.scala</url>
+          <line>93</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/StructStreaming/src/main/scala/Demo/SparkHudi.scala</url>
+          <line>56</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="batchDF.exprEnc" />
+        <watch expression="((Dataset)df).exprEnc" language="Scala" custom="org.apache.spark.sql.Dataset" />
+        <watch expression="((Dataset)df).bitmap$trans$0" language="Scala" custom="org.apache.spark.sql.Dataset" />
       </configuration>
     </watches-manager>
   </component>

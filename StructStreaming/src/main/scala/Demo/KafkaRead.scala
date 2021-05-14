@@ -2,8 +2,8 @@ package Demo
 
 import java.time.LocalDateTime
 
-import org.apache.spark.sql.streaming.StreamingQuery
-import org.apache.spark.sql.{DataFrame, Dataset, SaveMode, SparkSession}
+import org.apache.spark.sql.streaming.{DataStreamWriter, StreamingQuery}
+import org.apache.spark.sql.{DataFrame, Dataset, Row, SaveMode, SparkSession}
 
 /**
  * @author 虚竹
@@ -31,6 +31,7 @@ object KafkaRead {
             .option("group.id", "leqee")
             //从头消费
             .option("startingOffsets", "earliest")
+            .option("failOnDataLoss", false)
             .load()
 
         //        val query: StreamingQuery = df.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
@@ -50,31 +51,48 @@ object KafkaRead {
 
         //        val query: StreamingQuery = frame.writeStream.format("console").outputMode("append").start()
 
+        val value: DataStreamWriter[Row] = frame.writeStream
+            .queryName("SparkHudi")
+        val query: StreamingQuery = value.foreachBatch((ds: Dataset[Row], batchId: Long) => {
+            ds.write
+                .mode(SaveMode.Overwrite)
+                .format("org.apache.hudi")
+                .option("TABLE_TYPE_OPT_KEY", "MERGE_ON_READ")
+                .option("hoodie.table.name", "Demo")
+                .option("PRECOMBINE_FIELD_OPT_KEY", LocalDateTime.now().toString) //ts
+                .option("PARTITIONPATH_FIELD_OPT_KEY", "part1")
+                .option("RECORDKEY_FIELD_OPT_KEY", 1) //uuid
+                .mode(SaveMode.Append)
+                .save("F:\\Demo")
 
-        val query: StreamingQuery = frame
-            .writeStream
-            .queryName("demo")
-            .foreachBatch { (batchDF: DataFrame, _: Long) => {
-                batchDF.persist()
-                println(batchDF)
+        }).start()
+//        query
 
 
-                println(LocalDateTime.now() + "start writing mor table")
-                batchDF.write.format("org.apache.hudi")
-                    .option("TABLE_TYPE_OPT_KEY", "MERGE_ON_READ")
-                    .option("hoodie.table.name", "Demo")
-                    .option("PRECOMBINE_FIELD_OPT_KEY", LocalDateTime.now().toString) //ts
-                    .option("PARTITIONPATH_FIELD_OPT_KEY","part1")
-                    .option("RECORDKEY_FIELD_OPT_KEY",1) //uuid
-                    .mode(SaveMode.Append)
-                    .save("/tmp/xzhang/MERGE_ON_READ")
-
-                println(LocalDateTime.now() + "finish")
-                batchDF.unpersist()
-            }
-            }
-            .option("checkpointLocation", "/tmp/sparkHudi/checkpoint/")
-            .start()
+//        val query: StreamingQuery = frame
+//            .writeStream
+//            .queryName("demo")
+//            .foreachBatch { (batchDF: DataFrame, _: Long) => {
+//                batchDF.persist()
+//                println(batchDF)
+//
+//
+//                println(LocalDateTime.now() + "start writing mor table")
+//                batchDF.write.format("org.apache.hudi")
+//                    .option("TABLE_TYPE_OPT_KEY", "MERGE_ON_READ")
+//                    .option("hoodie.table.name", "Demo")
+//                    .option("PRECOMBINE_FIELD_OPT_KEY", LocalDateTime.now().toString) //ts
+//                    .option("PARTITIONPATH_FIELD_OPT_KEY","part1")
+//                    .option("RECORDKEY_FIELD_OPT_KEY",1) //uuid
+//                    .mode(SaveMode.Append)
+//                    .save("/tmp/xzhang/MERGE_ON_READ")
+//
+//                println(LocalDateTime.now() + "finish")
+//                batchDF.unpersist()
+//            }
+//            }
+//            .option("checkpointLocation", "/tmp/sparkHudi/checkpoint/1")
+//            .start()
 
 
         query.awaitTermination()
